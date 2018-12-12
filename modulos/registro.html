@@ -1,0 +1,26 @@
+<div class="scrollable">  
+  <div class="scrollable-content">
+    <div class="list-group text-center">
+		<div class="list-group-item list-group-item-home">
+			<form ng-submit='alt()'>
+				<div class="form-group">
+					<label>Tu nombre de usuario</label>
+					<input type="text" class="form-control" ng-model='alta.usuario'/>
+				</div>				
+				<div class="form-group">
+					<label>Tu contraseña</label>
+					<input type="{{tipo?'text':'password'}}" class="form-control" ng-model='alta.password'/>
+				</div>
+				<div>
+					<div class="form-group">
+					<label>Mostrar Contraseña</label>
+					<ui-switch ng-model='tipo'></ui-switch>
+					</div>
+				</div>
+				<button  class="btn btn-primary btn-block">Registrarme</button>	
+			</form>
+			<div><h3>{{alta.resp}}</h3></div>
+		</div>
+	</div>
+  </div>
+</div>

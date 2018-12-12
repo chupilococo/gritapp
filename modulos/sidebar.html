@@ -1,0 +1,13 @@
+<div class="scrollable">
+  <h1 class="scrollable-header app-name">Opciones</h1>
+  <div class="scrollable-content">
+    <div class="list-group" ui-turn-off='uiSidebarLeft'>
+		<div id='offline' class='list-group-item' onclick='alert("no tenes internet")' ng-hide="online">No tenes conexion...	<i class="fa fa-thumbs-down pull-right" ></i></div>
+		<div id='online' class='list-group-item' ng-show="online">Tenes conexion Todo va bien <i class="fa fa-hand-peace-o fa-fw pull-right" ></i></div>  
+		<a class="list-group-item" href="index.html#/">Inicio<i class="fa fa-chevron-right pull-right"></i></a>
+		<a class="list-group-item" href="index.html#/todos">Todos<i class="fa fa-chevron-right pull-right"></i></a>
+		<a class="list-group-item" href="index.html#/agregar">Agregar<i class="fa fa-chevron-right pull-right"></i></a>
+		<a class="list-group-item" ng-show="{{(!dameLocal.nombre)?true:false}}" href="index.html#/registro">Registrarme<i class="fa fa-chevron-right pull-right"></i></a>
+    </div>
+  </div>
+</div>

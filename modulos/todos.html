@@ -1,0 +1,40 @@
+<div class="scrollable">  
+  <div class="scrollable-content">
+    <div class="list-group text-center">
+      <div class="list-group-item list-group-item-home">
+
+		<div ng-repeat="x in tt" >
+			<div>
+				<h2>{{x.quien}} escribio:</h2>
+				<h3>{{ (x.quien != dameLocal.nombre && x.publico=='no')?'texto privado':x.que}}</h3>
+				<div ng-hide={{x.quien!=dameLocal.nombre}}>
+					<a href ng-click="edit(x.id)">
+						<i class='fa fa-pencil-square-o fa-2x ' ></i>
+					</a>
+					<a href="" ng-click="borrar(x.id)">
+						<i class='fa fa-trash-o fa-2x ' ></i>
+					</a>
+				</div>
+				<div id='edit{{x.id}}' ng-show='false' >
+					
+					<form ng-submit='ag()'>
+						<div class="form-group">
+							<label>Que queres Decir</label>
+							<textarea id='texto' type="text" class="form-control" ng-model='agregar.texto'/>{{x.que}}</textarea>
+						</div>
+						<div>
+							<div class="form-group">
+							<ui-switch ng-model='agregar.publico'></ui-switch><h3>Publico:{{(agregar.publico)?'si':'no'}}</h3>
+							</div>
+						</div>
+						<button class="btn btn-primary btn-block">Guardar</button>	
+					</form>
+				</div>
+			</div>
+			<hr/>
+		</div>
+
+	</div>
+	</div>
+  </div>
+</div>
