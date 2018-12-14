@@ -2,7 +2,7 @@
   <div class="scrollable-content">
       <div class="list-group" >
 		<div class="list-group-item">
-			<form ng-show='{{(dameLocal.nombre)?false:true}}' role='form' ng-submit="validarusuario()">
+			<form ng-show='(dameLocal.nombre)?false:true' role='form' ng-submit="validarusuario()">
 			<legend>Login</legend>
 				<div class="form-group">
 					<label>Email</label>
@@ -15,7 +15,7 @@
 				</div>
 				<button class="btn btn-primary btn-block">Login</button>
 			</form>
-			<form ng-show='{{(dameLocal.nombre)?true:false}}' role='form' ng-submit="logout()">
+			<form ng-show='(dameLocal.nombre)?true:false' role='form' ng-submit="logout()">
 			<legend>Logueado como {{dameLocal.nombre}}</legend>
 				    <button class="btn btn-primary btn-block">Logout {{log1}} </button>
 			</form>			

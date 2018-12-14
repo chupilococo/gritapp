@@ -1,8 +1,9 @@
-var app = angular.module('myApp', [
+let app = angular.module('myApp', [
   'ngRoute',
   'mobile-angular-ui',
   'mobile-angular-ui.gestures']);
 
+const _API='http://52.26.64.212/app/php/';
 
 app.run(function($transform,$window, $rootScope,$http) {
   window.$transform = $transform;
@@ -18,9 +19,9 @@ app.run(function($transform,$window, $rootScope,$http) {
           $rootScope.online = true;
 		  if(localStorage.getItem("publicacion")){
 			  alert('tenes publicaciones pendientes');
-			  $rootScope.pendiente=JSON.parse(localStorage.getItem("publicacion"))
-			  console.log($rootScope.pendiente);
-			  $http.get("http://52.26.64.212/app/php/funciones.php?f=agregar&u="+$rootScope.pendiente[0].quien+"&t="+$rootScope.pendiente[0].que+"&p="+(($rootScope.pendiente[0].publico)?'si':'no'))
+			  $rootScope.pendiente=JSON.parse(localStorage.getItem("publicacion"));
+			  // noinspection JSUnresolvedVariable
+			  $http.get(_API+"funciones.php?f=agregar&u="+$rootScope.pendiente[0].quien+"&t="+$rootScope.pendiente[0].que+"&p="+(($rootScope.pendiente[0].publico)?'si':'no'))
 		  }
         });
       }, false);
@@ -74,51 +75,47 @@ app.directive('toucharea', ['$touch', function($touch){
 //
 app.controller('MainController', function($rootScope, $scope, $http){
 	$scope.$watch('online', function(newStatus) {});
-	$http.get("http://52.26.64.212/app/php/funciones.php?f=comentarios")
+	$http.get(_API+"funciones.php?f=comentarios")
     .then(function(response) {
-    	console.log(response.data);
         $scope.tt=angular.fromJson(response.data);
 	});
 	$scope.coso =function (){
-	$http.get("http://52.26.64.212/app/php/funciones.php?f=agregar&u="+$scope.dameLocal.nombre+"&t="+$scope.agregar.texto+"&p="+(($scope.agregar.publico)?'si':'no'))
+	// noinspection JSUnresolvedVariable
+		$http.get(_API+"funciones.php?f=agregar&u="+$scope.dameLocal.nombre+"&t="+$scope.agregar.texto+"&p="+(($scope.agregar.publico)?'si':'no'))
     .then(function(response) {
-		console.log("http://52.26.64.212/app/php/funciones.php?f=agregar&u="+$scope.dameLocal.nombre+"&t="+$scope.agregar.texto+"&p="+(($scope.agregar.publico)?'si':'no'))
         $scope.resp= response.data;
-		console.log($scope.resp)
-		location.reload(); 
+		location.reload();
 		})
 	};
 	
 	
 	$scope.newUser =function (){
-	$http.get("http://52.26.64.212/app/php/funciones.php?f=newUser&u="+$scope.alta.usuario+"&p="+$scope.alta.password)
+	// noinspection JSUnresolvedVariable
+		$http.get(_API+"funciones.php?f=newUser&u="+$scope.alta.usuario+"&p="+$scope.alta.password)
     .then(function(response) {
 		$scope.alta.resp= response.data;
-		console.log($scope.alta.resp);
 		})
 	};
 	
 	$scope.comentEdit =function (a){
-		$http.get("http://52.26.64.212/app/php/funciones.php?f=comentEdit&u="+a)
+		$http.get(_API+"funciones.php?f=comentEdit&u="+a)
 			.then(function(response) {
 				$scope.resp=response.data;
-				document.getElementById('edit'+$scope.resp[0].id).className='ng-show';
-				$scope.agregar.texto=$scope.resp[0].que;
+				document.getElementById('edit'+a).className='ng-show';
+				$scope.agregar.texto=$scope.resp.que;
 			})
 	};
 	
 	$scope.comentDel =function (a){
-	$http.get("http://52.26.64.212/app/php/funciones.php?f=comentDel&u="+a)
+	$http.get(_API+"funciones.php?f=comentDel&u="+a)
     .then(function(response) {
         $scope.resp= response.data;
-		console.log($scope.resp)
 		})
 	};
 
 	$scope.edit=function(a){
-		console.log(a);
-		// $scope.comentEdit(a);
-		// $scope.comentDel(a);
+		$scope.comentEdit(a);
+		$scope.comentDel(a);
 	};
 	
 	$scope.borrar=function(a){
@@ -131,41 +128,41 @@ app.controller('MainController', function($rootScope, $scope, $http){
 	
 	$scope.alta={};
 	$scope.alt=function(){
-		if ($scope.alta.usuario==undefined){
+		// noinspection JSUnresolvedVariable
+		if ($scope.alta.usuario===undefined){
 			alert('el usuario no puede estar vacio')
-		}else if($scope.alta.password==undefined){ alert('la contraseña no puede estar vacia')
+		}else if($scope.alta.password===undefined){ alert('la contraseña no puede estar vacia');
 			}else{
-				console.log($scope.alta.usuario,$scope.alta.password);
+				// noinspection JSUnresolvedVariable
 				$scope.newUser();
 			}
-		}
+		};
 	$scope.agregar={};
 	$scope.agregar.publicar=false;
 	$scope.ag=function(){
-		if ($scope.agregar.texto==undefined){
+		if ($scope.agregar.texto===undefined){
 			alert('favor de ingresar texto')
-		}else if($scope.dameLocal==null){alert('favor de logearse')}else if($scope.agregar.publico==undefined){
+		}else if($scope.dameLocal==null){alert('favor de logearse')}else if($scope.agregar.publico===undefined){
 			$scope.agregar.publico=false;
-			console.log($scope.agregar.texto,$scope.agregar.publico,$scope.dameLocal.nombre);
-			if (!$scope.online){alert('estas offline pero lo guardamos en el localStorage') 
+			if (!$scope.online){alert('estas offline pero lo guardamos en el localStorage');
 			localStorage.setItem("publicacion", '[{"quien":"'+$scope.dameLocal.nombre+'","que":"'+$scope.agregar.texto+'","publico":"'+$scope.agregar.publico+'"}]')
 				}else{
 			$scope.coso();
 			}
 		}else{
-			console.log($scope.agregar.texto,$scope.agregar.publico,$scope.dameLocal.nombre);
-			if (!$scope.online){alert('estas offline pero lo guardamos en el localStorage') 
-				localStorage.setItem("publicacion", '[{"quien":"'+$scope.dameLocal.nombre+'","que":"'+$scope.agregar.texto+'","publico":"'+$scope.agregar.publico+'"}]')
+			if (!$scope.online){
+				alert('estas offline pero lo guardamos en el localStorage');
+				localStorage.setItem("publicacion", '[{"quien":"'+$scope.dameLocal.nombre+'","que":"'+$scope.agregar.texto+'","publico":"'+$scope.agregar.publico+'"}]');
 				}else{
 			$scope.coso();
 			}
 		}
-	}
+	};
 	$scope.user={};
 	$scope.validarusuario =function (){
-	$http.get("http://52.26.64.212/app/php/funciones.php?f=usuario&u="+$scope.user.nombre+"&p="+$scope.user.password)
+	$http.get(_API+"funciones.php?f=usuario&u="+$scope.user.nombre+"&p="+$scope.user.password)
     .then(function(response) {
-        $scope.valid= (angular.fromJson(response.data)=='')?false:true;
+        $scope.valid= (angular.fromJson(response.data) !== '');
 		if($scope.valid){
 			localStorage.setItem("usuario", JSON.stringify($scope.user));
 			$scope.dataUser = localStorage.getItem("usuario");
@@ -207,11 +204,8 @@ app.controller('MainController', function($rootScope, $scope, $http){
   };
 	$scope.log=false;
 	$scope.dataUser = localStorage.getItem("usuario");
-			if(localStorage.getItem("usaurio") != null){
-				$scope.log=true;
-				
-	}else{$scope.log=false};
-	$scope.dameLocal = JSON.parse($scope.dataUser)  
+	$scope.log = localStorage.getItem("usaurio") != null;
+	$scope.dameLocal = JSON.parse($scope.dataUser);
 	$scope.logout=function(){
 		localStorage.clear();
 		location.reload(); 

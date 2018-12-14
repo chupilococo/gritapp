@@ -2,18 +2,25 @@
   <div class="scrollable-content">
     <div class="list-group text-center">
 		<div class="list-group-item list-group-item-home">
-			<form ng-submit='ag()'>
-				<div class="form-group">
-					<label>Que queres Decir</label>
-					<textarea id='texto' type="text" class="form-control" ng-model='agregar.texto'/></textarea>
-				</div>
-				<div>
+			<div ng-show="(dameLocal.nombre)?true:false">
+				<form ng-submit='ag()'>
 					<div class="form-group">
-					<ui-switch ng-model='agregar.publico'></ui-switch><h3>Publico:{{(agregar.publico)?'si':'no'}}</h3>
+						<label>Que queres Decir</label>
+						<textarea id='texto' type="text" class="form-control" ng-model='agregar.texto'/></textarea>
 					</div>
-				</div>
-				<button class="btn btn-primary btn-block">Publicar</button>	
-			</form>
+					<div>
+						<div class="form-group">
+						<ui-switch ng-model='agregar.publico'></ui-switch><h3>Publico:{{(agregar.publico)?'si':'no'}}</h3>
+						</div>
+					</div>
+					<button class="btn btn-primary btn-block">Publicar</button>
+				</form>
+			</div>
+		</div>
+		<div ng-show="(dameLocal.nombre)?false:true" class="list-group-item list-group-item-home">
+			<h3>Usuario no Logueado</h3>
+			<p>Favor de registrarte o loguearte <br>
+				para poder publicar comentarios</p>
 		</div>
 	</div>
   </div>

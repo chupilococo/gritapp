@@ -7,7 +7,7 @@
 			<div>
 				<h2>{{x.quien}} escribio:</h2>
 				<h3>{{ (x.quien != dameLocal.nombre && x.publico=='no')?'texto privado':x.que}}</h3>
-				<div ng-hide={{x.quien!=dameLocal.nombre}}>
+				<div ng-hide=x.quien!=dameLocal.nombre>
 					<a href ng-click="edit(x.id)">
 						<i class='fa fa-pencil-square-o fa-2x ' ></i>
 					</a>
